@@ -56,16 +56,16 @@ exports.onAfterCompressSettings = onAfterCompressSettings;
 const onAfterBuild = function (options, result) {
     return __awaiter(this, void 0, void 0, function* () {
         // change the uuid to test
-        const ccUrl = `https://l1-proxy1.lumigame.com/shared-resources/cocos-engine/2d/cc.js`;
+        const ccUrl = 'const hostname = window.location.hostname;\ntopLevelImport(`${hostname}/shared-resources/cocos-engine/2d/cc.js`)';
         const indexFile = result.paths["indexJs"];
         console.log("after build indexFile", indexFile);
         const data = fs_extra_1.default.readFileSync(indexFile, "utf8");
-        const newData = data.replace(`topLevelImport('cc')`, `topLevelImport('${ccUrl}')`);
+        const newData = data.replace(`topLevelImport('cc')`, ccUrl);
         fs_extra_1.default.writeFileSync(indexFile, newData, "utf8");
-        const importMapFile = result.paths["cache"]["importMap"];
-        console.log("importMapFile: " + importMapFile);
-        const mapData = `{"imports":{"cc":"${ccUrl}"}}`;
-        fs_extra_1.default.writeFileSync(importMapFile, mapData, "utf8");
+        // const importMapFile = result.paths["cache"]["importMap"];
+        // console.log("importMapFile: " + importMapFile);
+        // const mapData = `{"imports":{"cc":"${ccUrl}"}}`;
+        // fs.writeFileSync(importMapFile, mapData, "utf8");
     });
 };
 exports.onAfterBuild = onAfterBuild;
